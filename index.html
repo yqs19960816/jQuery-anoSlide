@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="description" content="[add your bin description]" />
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+
+    <meta charset="utf-8">
+    <title>轮播图</title>
+    <style>
+        .images {
+            width: 1200px;
+            transition: all 0.5s;
+        }
+
+        .images>img {
+            float: left;
+        }
+
+        .clearfix:after {
+            content: "";
+            display: block;
+            height: 0;
+            visibility: hidden;
+            line-height: 0;
+            clear: both;
+        }
+
+        .window {
+            width: 300px;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .red {
+            color: red;
+        }
+        #buttons > span {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="xx">
+    <div class="window">
+        <div class="images" id=images>
+            <img src="http://img0.imgtn.bdimg.com/it/u=3468326498,2689027556&fm=26&gp=0.jpg" width=300 alt="图片1" height=200>
+            <img src="http://img3.imgtn.bdimg.com/it/u=4474617,2500500900&fm=26&gp=0.jpg" width=300 alt="" height=200>
+            <img src="http://img4.imgtn.bdimg.com/it/u=2254797141,2162852177&fm=200&gp=0.jpg" width=300 alt="" height=200>
+            <img src="http://img3.imgtn.bdimg.com/it/u=3053235260,2134970693&fm=26&gp=0.jpg" width=300 alt="" height=200>
+        </div>
+    </div>
+    <span id=buttons>
+        <span>第1张</span>
+        <span>第2张</span>
+        <span>第3张</span>
+        <span>第4张</span>
+    </span>
+</div>
+    <script>
+        //点击按钮图片缓动
+        var buttonsAll = $('#buttons > span')
+        for (let i = 0; i < buttonsAll.length; i++) {
+            $(buttonsAll[i]).on('click', function (x) {
+                var index = $(x.currentTarget).index()
+                console.log(index);
+                var run = index * -300
+                $('#images').css({
+                    transform: 'translate(' + run + 'px)'
+                })
+                n = index
+                active($(buttonsAll[index]))
+            })
+        }
+        var n = 0
+        active($(buttonsAll[n]));
+        var length = buttonsAll.length;
+        var timeId = setTime();
+        //图片自动播放
+        function setTime() {
+            return setInterval(() => {
+                n += 1
+                $(buttonsAll.eq(n % length)).trigger('click');
+            }, 2000)
+        }
+        //自动高亮span
+        function active($button) {
+            $button
+                .addClass('red').siblings('.red').removeClass('red');
+        }
+        //鼠标移入移出切换定时器
+        $('.window').on('mouseenter', function () {
+            window.clearInterval(timeId)
+        })
+
+        $('.window').on('mouseleave', function () {
+            timeId = setTime()
+        })
+    </script>
+</body>
+
+</html>
