@@ -97,6 +97,13 @@
         $('.window').on('mouseleave', function () {
             timeId = setTime()
         })
+        $('#buttons').on('mouseenter', function () {
+            window.clearInterval(timeId)
+        })
+
+        $('#buttons').on('mouseleave', function () {
+            timeId = setTime()
+        })
     </script>
 </body>
 
